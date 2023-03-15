@@ -1,0 +1,28 @@
+---
+sidebar_position: 1
+---
+
+
+# Introduction
+
+You are leading the infrastructure team at your company which provides enablement support to product teams. One of these teams comes to you with the following problem.
+
+The team maintains a service which is under a tight SLA for uptime and constantly receives traffic. It is backed by an operational database (MySQL) that is constantly undergoing change. The team wants to be able to quickly iterate on the database’s schema, adding new columns, modifying indices, and even changing how tables are structured. They want to be able to iterate quickly on both their service and the underlying database. The service is currently deployed in AWS using elastic kubernetes service. Ingress is connected to an AWS API gateway and route53 for external networking. The production cluster is in a single region.
+
+For each of these questions assume that they will have to implement the solution themselves (you can only guide) and therefore need a clear and detailed plan of action from you. Your answer should include a discussion of how you will help them along the way.
+
+- What will you recommend the team do? Discuss what they should do both for the service itself and the database versioning. Draw diagrams to support your recommendation and answer both using general principles and by providing specific technologies that you would recommend. Specifically:
+  - What happens if they release a new version of their software and they have to do a rollback? How would they know if they need to do a rollback? What strategy would you recommend to avoid this situation?
+  - How would you advise the team to version their software? How would those versions be reflected in their API, code, builds, CI/CD system, etc.?
+  - How would you recommend they monitor their system in order to maintain their SLA?
+
+> 🏄🏽‍♀️ 🏄🏽 🏄🏽‍♂️ [Read about this in the "Release Management Principles" section.](./deployment-ideas/summary)
+
+
+- The team decides on the following strategy for managing database versioning: Every time they need to test a new version of their service and/or database, they want to create a new MySQL cluster and a new deployment into their dev cluster (this can be auto-triggered based on a PR in Github). The new MySQL database is a replica of the main database with any necessary migrations done to reflect the updates. They want to QA this new database / service pair and move it through dev, staging, and into production. How can they do this?
+
+> 🥫🥡😋 [Read about this in the "How to Deploy" section.](./deployment-mechanics)
+
+- The team has decided to host their database directly within Kubernetes instead of using a managed service or hosting it elsewhere. They feel that it will be easier to create these database replicas if they are managed via Kubernetes templates. In other words, they need to deploy the database and all of its replicas directly into their Kubernetes cluster. This will live next to the actual service deployment. What are the pros and cons of this decision (specifically regarding running a database on K8s), and how can they implement this? Keep in mind that they need to be able to do rollbacks, gradual rollouts, backups, scaling, etc.
+
+> [Read about this in the "MySQL on Kubernetes " section.](./kubernetes-deployment)
